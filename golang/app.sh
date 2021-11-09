@@ -8,11 +8,14 @@ APP_NAME="golang"
 
 apply_app_name
 
-FOLDER_GOPATH=$FOLDER_APP/gopath
+# FOLDER_GOPATH=$FOLDER_APP/gopath
+# FOLDER_GOMODLINK=$FOLDER_GOPATH/pkg/mod
+FOLDER_GOMOD=$FOLDER_APP/mod
 
 function mkdir_all() {
     util_mkdir_all
-    mkdir -p $FOLDER_GOPATH
+    # mkdir -p $FOLDER_GOPATH
+    mkdir -p $FOLDER_GOMOD
 }
 # env will set GITHUB_ACCESS_TOKEN
 
@@ -84,6 +87,10 @@ function install() {
     echo "mv $FOLDER_CACHE"/go" $targetPath"
     mv $FOLDER_CACHE"/go" $targetPath
 
+    #link mod
+    mkdir -p $targetPath/gopath/pkg
+    ln -s $FOLDER_GOMOD $targetPath/gopath/pkg/mod
+
     echo "set defaut: "$selectVer
     util_default $selectVer
     show_path
@@ -95,10 +102,10 @@ function install() {
 function show_path() {
     echo "export GO111MODULE=on"
     export GO111MODULE=on
-    echo "export GOPATH=\$XVM/xvm/$APP_NAME/gopath"
-    export GOPATH=$XVM/xvm/$APP_NAME/gopath
     echo "export GOROOT=\$XVM/xvm/$APP_NAME/default"
     export GOROOT=$XVM/xvm/$APP_NAME/default
+    echo "export GOPATH=\$GOROOT/gopath"
+    export export GOPATH=$GOROOT/gopath
     echo "export PATH=\$PATH:\$GOPATH/bin:\$GOROOT/bin"
     export PATH=$PATH:$GOPATH/bin:$GOROOT/bin
 }
