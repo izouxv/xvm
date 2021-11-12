@@ -144,7 +144,7 @@ main() {
         ;;
     "default")
         util_default ${@:2}
-        show_path
+        # show_path
         ;;
     "use")
         util_use ${@:2}
