@@ -57,7 +57,7 @@ function util_default() {
     if [ -e "$DEFAULT_LINK" ]; then
         targetname=$(readlink $DEFAULT_LINK)
         # $(dirname
-        echo "default: $(basename $targetname)"
+        # echo "default: $(basename $targetname)"
     fi
 
     select_one_ver selectVer $FOLDER_VERSION $@
@@ -69,11 +69,11 @@ function util_default() {
     fi
 
     rm $DEFAULT_LINK
-    echo "ln -s $FOLDER_VERSION/$selectVer $DEFAULT_LINK"
+    # echo "ln -s $FOLDER_VERSION/$selectVer $DEFAULT_LINK"
     ln -s $FOLDER_VERSION/$selectVer $DEFAULT_LINK
     echo "set default $selectVer suc"
 
-    echo "export PATH=\$PATH:\$XVM/xvm/$APP_NAME/default/bin"
+    # echo "export PATH=\$PATH:\$XVM/xvm/$APP_NAME/default/bin"
     export PATH=$PATH:$XVM/xvm/$APP_NAME/default/bin
 
 }
