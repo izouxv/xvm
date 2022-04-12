@@ -8,14 +8,14 @@ APP_NAME="golang"
 
 apply_app_name
 
-# FOLDER_GOPATH=$FOLDER_APP/gopath
-# FOLDER_GOMODLINK=$FOLDER_GOPATH/pkg/mod
-FOLDER_GOMOD=$FOLDER_APP/mod
+# # FOLDER_GOPATH=$FOLDER_APP/gopath
+# # FOLDER_GOMODLINK=$FOLDER_GOPATH/pkg/mod
+# FOLDER_GOMOD=$FOLDER_APP/mod
 
 function mkdir_all() {
     util_mkdir_all
-    # mkdir -p $FOLDER_GOPATH
-    mkdir -p $FOLDER_GOMOD
+    # # mkdir -p $FOLDER_GOPATH
+    # mkdir -p $FOLDER_GOMOD
 }
 # env will set GITHUB_ACCESS_TOKEN
 
@@ -25,7 +25,8 @@ function install() {
 
     if [ -z "$selectVer" ]; then
         if [ ! -z "$GITHUB_ACCESS_TOKEN" ]; then
-            VERS=$(curl --silent -H "Authorization: token $GITHUB_ACCESS_TOKEN" https://api.github.com/repos/golang/go/git/refs/tags | grep -o "go[0-9].[0-9]*[0-9].[0-9]*[0-9]" | uniq)
+            # VERS=$(curl --silent -H "Authorization: token $GITHUB_ACCESS_TOKEN" https://api.github.com/repos/golang/go/git/refs/tags | grep -o "go[0-9].[0-9]*[0-9].[0-9]*[0-9]" | uniq)
+            VERS=$(curl --silent -H "Authorization: token $GITHUB_ACCESS_TOKEN" https://api.github.com/repos/golang/go/git/refs/tags | grep -o "go[0-9].[0-9]*[0-9][.0-9]*" | uniq)
             echo "select one version"
             select ver in $VERS; do
                 echo "You have chosen $ver"
@@ -53,6 +54,7 @@ function install() {
     echo "install ver: "$selectVer
     pkgname=""
     arch="amd64"
+    arch="arm64"
     os=$(platform)
     case "$os" in
     "linux")
@@ -73,8 +75,9 @@ function install() {
     #if file not exist, download it
     tmpPath=$FOLDER_CACHE"/"$pkgname
     if [ ! -e "$tmpPath" ]; then
-        pkg_url="https://golang.org/dl/$pkgname"
-        pkg_url="https://golang.org/dl/$pkgname"
+        # pkg_url="https://golang.org/dl/$pkgname"
+        # pkg_url="https://golang.org/dl/$pkgname"
+        pkg_url="https://golang.google.cn/dl/$pkgname"
         echo "curl -L $pkg_url -o $pkgname.tmp"
         rm $tmpPath.tmp
         curl -L $pkg_url -o $tmpPath.tmp || exit 1
@@ -87,9 +90,9 @@ function install() {
     echo "mv $FOLDER_CACHE"/go" $targetPath"
     mv $FOLDER_CACHE"/go" $targetPath
 
-    #link mod
-    mkdir -p $targetPath/gopath/pkg
-    ln -s $FOLDER_GOMOD $targetPath/gopath/pkg/mod
+    # #link mod
+    # mkdir -p $targetPath/gopath/pkg
+    # ln -s $FOLDER_GOMOD $targetPath/gopath/pkg/mod
 
     echo "set defaut: "$selectVer
     util_default $selectVer
