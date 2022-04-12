@@ -28,7 +28,6 @@ function git_local_clone() {
     CACHE_GIT=$3
     TARGET_FOLDER=$4
 
-    # originGitResp=ssh://git@git.oauth.red/base/libGo.git
     originBareName=$(basename $originGitResp)
     originName=$(basename -s .git $originGitResp)
     originName=$TARGET_FOLDER
