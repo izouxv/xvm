@@ -9,13 +9,13 @@ APP_NAME="golang"
 apply_app_name
 
 # # FOLDER_GOPATH=$FOLDER_APP/gopath
-# # FOLDER_GOMODLINK=$FOLDER_GOPATH/pkg/mod
-# FOLDER_GOMOD=$FOLDER_APP/mod
+# # FOLDER_GOPKGLINK=$FOLDER_GOPATH/pkg/mod
+FOLDER_GOPKG=$FOLDER_APP/pkg
 
 function mkdir_all() {
     util_mkdir_all
     # # mkdir -p $FOLDER_GOPATH
-    # mkdir -p $FOLDER_GOMOD
+    mkdir -p $FOLDER_GOPKG
 }
 # env will set GITHUB_ACCESS_TOKEN
 
@@ -92,7 +92,10 @@ function install() {
 
     # #link mod
     # mkdir -p $targetPath/gopath/pkg
-    # ln -s $FOLDER_GOMOD $targetPath/gopath/pkg/mod
+    # ln -s $FOLDER_GOPKG $targetPath/gopath/pkg/mod
+    mkdir -p $targetPath/gopath/bin
+    echo "ln -s $FOLDER_GOPKG $targetPath/gopath/pkg"
+    ln -s $FOLDER_GOPKG $targetPath/gopath/pkg
 
     echo "set defaut: "$selectVer
     util_default $selectVer
