@@ -94,8 +94,9 @@ function install() {
     # mkdir -p $targetPath/gopath/pkg
     # ln -s $FOLDER_GOPKG $targetPath/gopath/pkg/mod
     mkdir -p $targetPath/gopath/bin
-    echo "ln -s $FOLDER_GOPKG $targetPath/gopath/pkg"
-    ln -s $FOLDER_GOPKG $targetPath/gopath/pkg
+    # echo "ln -s $FOLDER_GOPKG $targetPath/gopath/pkg"
+    # rm $targetPath/gopath/pkg
+    # ln -s $FOLDER_GOPKG $targetPath/gopath/pkg
 
     echo "set defaut: "$selectVer
     util_default $selectVer

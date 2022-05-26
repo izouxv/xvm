@@ -72,6 +72,13 @@ function util_default() {
     # echo "ln -s $FOLDER_VERSION/$selectVer $DEFAULT_LINK"
     ln -s $FOLDER_VERSION/$selectVer $DEFAULT_LINK
     echo "set default $selectVer suc"
+    echo "ln -s $FOLDER_VERSION/$selectVer $DEFAULT_LINK"
+
+    targetPath=$FOLDER_VERSION/$selectVer
+    FOLDER_GOPKG=$FOLDER_APP/pkg
+    echo "ln -s $FOLDER_GOPKG $targetPath/gopath/pkg"
+    rm $targetPath/gopath/pkg
+    ln -s $FOLDER_GOPKG $targetPath/gopath/pkg
 
     # echo "export PATH=\$PATH:\$XVM/xvm/$APP_NAME/default/bin"
     export PATH=$PATH:$XVM/xvm/$APP_NAME/default/bin
