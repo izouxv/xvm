@@ -126,6 +126,7 @@ main() {
         test
         ;;
     "install")
+        git_sync
         install ${@:2}
         ;;
     "uninstall")
@@ -145,7 +146,7 @@ main() {
         #     search ${@:2}
         #     ;;
     "sync")
-        git_sync ${@:2}
+        git_sync #${@:2}
         ;;
     *)
         echo $"NA: $0 $1"
