@@ -64,7 +64,7 @@ function install() {
     # echo "PPP1-" $PATH
 
     echo "set defaut: "$selectVer
-    util_default $selectVer
+    util_default_flutter $selectVer
 
     # echo "PPP2-" $PATH
     show_path
@@ -136,7 +136,7 @@ main() {
         util_list ${@:2}
         ;;
     "default")
-        util_default ${@:2}
+        util_default_flutter ${@:2}
         # show_path
         ;;
     "use")

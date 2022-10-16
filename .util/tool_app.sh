@@ -51,7 +51,35 @@ function util_use() {
     echo "export PATH=$targetPath:\$PATH"
     # eval $(./app.sh use go1.14.6)
 }
-function util_default() {
+
+function util_default_flutter() {
+    vers=$(ls $FOLDER_VERSION)
+
+    if [ -e "$DEFAULT_LINK" ]; then
+        targetname=$(readlink $DEFAULT_LINK)
+        # $(dirname
+        # echo "default: $(basename $targetname)"
+    fi
+
+    select_one_ver selectVer $FOLDER_VERSION $@
+
+    if [ -z "$selectVer" ]; then
+        echo "your versions is empty"
+        exit 1
+        return
+    fi
+
+    rm $DEFAULT_LINK
+    # echo "ln -s $FOLDER_VERSION/$selectVer $DEFAULT_LINK"
+    ln -s $FOLDER_VERSION/$selectVer $DEFAULT_LINK
+    echo "set default $selectVer suc"
+    echo "ln -s $FOLDER_VERSION/$selectVer $DEFAULT_LINK"
+
+    # echo "export PATH=\$PATH:\$XVM/xvm/$APP_NAME/default/bin"
+    export PATH=$PATH:$XVM/xvm/$APP_NAME/default/bin
+}
+
+function util_default_go() {
     vers=$(ls $FOLDER_VERSION)
 
     if [ -e "$DEFAULT_LINK" ]; then
@@ -82,5 +110,4 @@ function util_default() {
 
     # echo "export PATH=\$PATH:\$XVM/xvm/$APP_NAME/default/bin"
     export PATH=$PATH:$XVM/xvm/$APP_NAME/default/bin
-
 }
