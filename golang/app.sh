@@ -22,6 +22,11 @@ function mkdir_all() {
 function install() {
 
     selectVer=$1
+    os=$2
+
+    if [ -z "$os" ]; then
+        os=$(platform)
+    fi
 
     if [ -z "$selectVer" ]; then
         if [ ! -z "$GITHUB_ACCESS_TOKEN" ]; then
@@ -54,13 +59,13 @@ function install() {
     echo "install ver: "$selectVer
     pkgname=""
     arch="amd64"
-    arch="arm64"
-    os=$(platform)
+
     case "$os" in
     "linux")
         pkgname=$selectVer"."$os"-"$arch".tar.gz"
         ;;
     "darwin")
+        arch="arm64"
         pkgname=$selectVer"."$os"-"$arch".tar.gz"
         ;;
     "windows")
@@ -71,6 +76,11 @@ function install() {
         help
         ;;
     esac
+
+    # echo $pkgname
+    # echo $selectVer
+    # echo $os
+    # exit 1
 
     #if file not exist, download it
     tmpPath=$FOLDER_CACHE"/"$pkgname
@@ -129,7 +139,7 @@ main() {
     help() {
         echo "install | uninstall | use | list | default "
         echo "        use: eval \$(xvm.sh golang use go1.14.6)"
-        echo "        use: install ["", go1.14.6])"
+        echo "        use: install [go1.14.6, windows])"
     }
     if (($# < 1)); then
         help
