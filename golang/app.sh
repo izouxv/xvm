@@ -58,18 +58,21 @@ function install() {
     #get pkg name
     echo "install ver: "$selectVer
     pkgname=""
-    arch="amd64"
+
+    ARCH="amd64"
+    if [ "$(arch)" = "arm64" ]; then
+        ARCH=$(arch)
+    fi
 
     case "$os" in
     "linux")
-        pkgname=$selectVer"."$os"-"$arch".tar.gz"
+        pkgname=$selectVer"."$os"-"$ARCH".tar.gz"
         ;;
     "darwin")
-        arch="arm64"
-        pkgname=$selectVer"."$os"-"$arch".tar.gz"
+        pkgname=$selectVer"."$os"-"$ARCH".tar.gz"
         ;;
     "windows")
-        pkgname=$selectVer"."$os"-"$arch".zip"
+        pkgname=$selectVer"."$os"-"$ARCH".zip"
         ;;
     *)
         echo $"get_all_tags NA: $pf"
