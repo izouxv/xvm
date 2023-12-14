@@ -41,6 +41,7 @@ select with note
 ```
 xvm.sh flutter install 
 xvm.sh golang install 
+xvm.sh node install 
 ``` 
 install with version 
 ```
