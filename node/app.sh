@@ -4,18 +4,18 @@ PWDX=$(dirname ${BASH_SOURCE[0]})
 source $PWDX/../.util/tools.sh
 source $PWDX/../.util/tool_app.sh
 
-APP_NAME="golang"
+APP_NAME="node"
 
 apply_app_name
 
 # # FOLDER_GOPATH=$FOLDER_APP/gopath
 # # FOLDER_GOPKGLINK=$FOLDER_GOPATH/pkg/mod
-FOLDER_GOPKG=$FOLDER_APP/pkg
+# FOLDER_GOPKG=$FOLDER_APP/pkg
 
 function mkdir_all() {
     util_mkdir_all
     # # mkdir -p $FOLDER_GOPATH
-    mkdir -p $FOLDER_GOPKG
+    # mkdir -p $FOLDER_GOPKG
 }
 # env will set GITHUB_ACCESS_TOKEN
 
@@ -31,7 +31,8 @@ function install() {
     if [ -z "$selectVer" ]; then
         if [ ! -z "$GITHUB_ACCESS_TOKEN" ]; then
             # VERS=$(curl --silent -H "Authorization: token $GITHUB_ACCESS_TOKEN" https://api.github.com/repos/golang/go/git/refs/tags | grep -o "go[0-9].[0-9]*[0-9].[0-9]*[0-9]" | uniq)
-            VERS=$(curl --silent -H "Authorization: token $GITHUB_ACCESS_TOKEN" https://api.github.com/repos/golang/go/git/refs/tags | grep -o "go[0-9].[0-9]*[0-9][.0-9]*" | uniq)
+            # VERS=$(curl --silent -H "Authorization: token $GITHUB_ACCESS_TOKEN" https://api.github.com/repos/golang/go/git/refs/tags | grep -o "go[0-9].[0-9]*[0-9][.0-9]*" | uniq)
+            VERS=$(curl --silent -H "Authorization: token $GITHUB_ACCESS_TOKEN" https://api.github.com/repos/nodejs/node/git/refs/tags | grep -o "v[0-9]*[0-9].[0-9]*[0-9][.0-9]*" | uniq)
             echo "select one version"
             select ver in $VERS; do
                 echo "You have chosen $ver"
@@ -44,7 +45,7 @@ function install() {
     fi
 
     if [ -z "$selectVer" ]; then
-        echo "your must input a verions, eg: go1.16.4"
+        echo "your must input a verions, eg: v20.6.1"
         exit 1
         return
     fi
@@ -59,26 +60,40 @@ function install() {
     echo "install ver: "$selectVer
     pkgname=""
 
-    ARCH="amd64"
+    ARCH="x64"
     if [ "$(arch)" = "arm64" ]; then
         ARCH=$(arch)
     fi
 
+    # https://nodejs.org/dist/v20.10.0/node-v20.10.0-darwin-x64.tar.gz
+    # https://nodejs.org/dist/v20.10.0/node-v20.10.0-darwin-arm64.tar.gz
+    # https://nodejs.org/dist/v20.10.0/node-v20.10.0-linux-x64.tar.xz
+    # https://nodejs.org/dist/v20.10.0/node-v20.10.0-linux-arm64.tar.xz
+    # https://nodejs.org/dist/v20.10.0/node-v20.10.0-win-arm64.zip
+    # https://nodejs.org/dist/v20.10.0/node-v20.10.0-win-arm64.zip
+
+    baseUrl="https://nodejs.org/dist"
+
+    dirname="node-"$selectVer-$os"-"$ARCH
     case "$os" in
     "linux")
-        pkgname=$selectVer"."$os"-"$ARCH".tar.gz"
+        pkgname="node-"$selectVer-$os"-"$ARCH".tar.xz"
         ;;
     "darwin")
-        pkgname=$selectVer"."$os"-"$ARCH".tar.gz"
+        pkgname="node-"$selectVer-$os"-"$ARCH".tar.gz"
         ;;
     "windows")
-        pkgname=$selectVer"."$os"-"$ARCH".zip"
+        pkgname="node-"$selectVer-$os"-"$ARCH".zip"
         ;;
     *)
         echo $"get_all_tags NA: $pf"
         help
         ;;
     esac
+
+    pkg_url="$baseUrl/$selectVer/$pkgname"
+    # echo $pkg_url
+    # exit 1
 
     # echo $pkgname
     # echo $selectVer
@@ -90,9 +105,11 @@ function install() {
     if [ ! -e "$tmpPath" ]; then
         # pkg_url="https://golang.org/dl/$pkgname"
         # pkg_url="https://golang.org/dl/$pkgname"
-        pkg_url="https://golang.google.cn/dl/$pkgname"
+        # pkg_url="$baseUrl/$pkgname"
         echo "curl -L $pkg_url -o $pkgname.tmp"
-        rm $tmpPath.tmp
+        if [ -e "$tmpPath.tmp" ]; then
+            rm $tmpPath.tmp
+        fi
         curl -L $pkg_url -o $tmpPath.tmp || exit 1
         mv $tmpPath.tmp $tmpPath
     fi
@@ -100,33 +117,34 @@ function install() {
     #extra it to target folder
 
     tar -zxf $tmpPath -C $FOLDER_CACHE
-    echo "mv $FOLDER_CACHE"/go" $targetPath"
-    mv $FOLDER_CACHE"/go" $targetPath
+    echo "mv $FOLDER_CACHE"/$dirname" $targetPath"
+    mv $FOLDER_CACHE"/$dirname" $targetPath
 
     # #link mod
     # mkdir -p $targetPath/gopath/pkg
     # ln -s $FOLDER_GOPKG $targetPath/gopath/pkg/mod
-    mkdir -p $targetPath/gopath/bin
+    # mkdir -p $targetPath/gopath/bin
     # echo "ln -s $FOLDER_GOPKG $targetPath/gopath/pkg"
     # rm $targetPath/gopath/pkg
     # ln -s $FOLDER_GOPKG $targetPath/gopath/pkg
 
     echo "set defaut: "$selectVer
-    util_default_go $selectVer
+    util_default_path $selectVer
+
     show_path
     refresh_path
 
-    go version
+    node -v
 
     # echo "which go: "$(which go)
 }
 function show_path() {
 
+    echo $FOLDER_PROFILE
+    # rm $FOLDER_PROFILE
     cat >$FOLDER_PROFILE <<EOF
-export GO111MODULE=on
-export GOROOT=\$XVM/$APP_NAME/default
-export GOPATH=\$GOROOT/gopath
-PATH=\$PATH:\$GOPATH/bin:\$GOROOT/bin
+export NODEJS=\$XVM/$APP_NAME/default
+PATH=\$PATH:\$NODEJS/bin 
 EOF
 
 }
@@ -137,8 +155,11 @@ function search() {
 main() {
     mkdir_all
 
-    # # refresh_path
     # show_path
+    # refresh_path
+    # exit 1
+
+    # echo $FOLDER_PROFILE
     # exit 1
 
     # echo "Total Arguments:" $#
@@ -146,8 +167,8 @@ main() {
     cd $PWDX
     help() {
         echo "install | uninstall | list | default "
-        echo "        use: eval \$(xvm.sh golang use go1.14.6)"
-        echo "        use: install [go1.14.6, windows])"
+        echo "        use: eval \$(xvm.sh node use v20.6.1)"
+        echo "        use: install [v20.6.1])"
     }
     if (($# < 1)); then
         help
@@ -168,12 +189,12 @@ main() {
         util_list ${@:2}
         ;;
     "default")
-        util_default_go ${@:2}
+        util_default_path ${@:2}
         # show_path
         ;;
-    # "use")
-    #     util_use ${@:2}
-    #     ;;
+        # "use")
+        #     util_use ${@:2}
+        # ;;
     # "search")
     #     search ${@:2}
     #     ;;

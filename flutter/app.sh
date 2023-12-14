@@ -64,10 +64,11 @@ function install() {
     # echo "PPP1-" $PATH
 
     echo "set defaut: "$selectVer
-    util_default_flutter $selectVer
+    util_default_path $selectVer
 
     # echo "PPP2-" $PATH
     show_path
+    refresh_path
 
     #get pkg name
     echo "install ver: "$selectVer
@@ -92,12 +93,17 @@ function git_sync() {
 }
 
 function show_path() {
-    echo "export FLUTTER_DIR=$XVM/xvm/flutter/default"
-    export FLUTTER_DIR=$XVM/xvm/flutter/default
-    echo "export PATH=\$PATH:\$FLUTTER_DIR/bin"
-    export PATH=$PATH:$FLUTTER_DIR/bin
-    echo "export PATH=\$PATH:\$FLUTTER_DIR/bin/cache/dart-sdk/bin"
-    export PATH=$PATH:$FLUTTER_DIR/bin/cache/dart-sdk/bin
+
+    cat >$FOLDER_PROFILE <<EOF
+export PUB_HOSTED_URL=https://pub.flutter-io.cn
+export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
+export FLUTTER_GIT_URL=\$XVM/flutter/cache/flutter.git
+export PUB_CACHE=\$XVM/flutter/flutter-pub-cache
+export FLUTTER_DIR=\$XVM/flutter/default 
+PATH=\$PATH:\$FLUTTER_DIR/bin 
+PATH=\$PATH:\$FLUTTER_DIR/bin/cache/dart-sdk/bin
+
+EOF
 }
 
 function search() {
@@ -107,11 +113,13 @@ function search() {
 main() {
     util_mkdir_all
 
+    # show_path
+    # exit 1
     # echo "Total Arguments:" $#
     # echo "All Arguments values:" $@
     cd $PWDX
     help() {
-        echo "install | uninstall | use | list | default | sync"
+        echo "install | uninstall | list | default | sync"
         echo "        use: eval \$(xvm.sh flutter use 2.2.3)"
         echo "        use: install ["", 2.2.3])"
         echo "        use: install 1.17.1_boost util cache 1.17.1_boost.tar.gz"
@@ -136,12 +144,12 @@ main() {
         util_list ${@:2}
         ;;
     "default")
-        util_default_flutter ${@:2}
+        util_default_path ${@:2}
         # show_path
         ;;
-    "use")
-        util_use ${@:2}
-        ;;
+        # "use")
+        #     util_use ${@:2}
+        #     ;;
         # "search")
         #     search ${@:2}
         #     ;;

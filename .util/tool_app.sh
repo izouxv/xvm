@@ -11,13 +11,32 @@ FOLDER_APP=""
 FOLDER_VERSION=""
 DEFAULT_LINK=""
 FOLDER_CACHE=""
+FOLDER_PROFILE=""
 APP_NAME=""
 
 function apply_app_name() {
-    FOLDER_APP=$XVM_PATH/xvm/$APP_NAME
+    FOLDER_APP=$XVM_PATH/$APP_NAME
     FOLDER_VERSION=$FOLDER_APP/versions
     DEFAULT_LINK=$FOLDER_APP/default
     FOLDER_CACHE=$FOLDER_APP/cache
+    FOLDER_PROFILE=$FOLDER_APP/profile
+}
+function refresh_path() {
+    # echo $XVM_PATH
+    # cd $XVM_PATH
+    # ls $XVM_PATH
+    # $(ls $XVM_PATH)
+    XVM_PROFILE=$XVM_PATH/profile
+    rm $XVM_PROFILE | true
+    for i in $(ls $XVM_PATH); do
+        targetProfile=$XVM_PATH/$i/profile
+        if [ -e "$targetProfile" ]; then
+            cat >>$XVM_PROFILE <<EOF
+source $targetProfile
+EOF
+        fi
+
+    done
 }
 
 function util_mkdir_all() {
@@ -52,7 +71,7 @@ function util_use() {
     # eval $(./app.sh use go1.14.6)
 }
 
-function util_default_flutter() {
+function util_default_path() {
     vers=$(ls $FOLDER_VERSION)
 
     if [ -e "$DEFAULT_LINK" ]; then
@@ -75,8 +94,7 @@ function util_default_flutter() {
     echo "set default $selectVer suc"
     echo "ln -s $FOLDER_VERSION/$selectVer $DEFAULT_LINK"
 
-    # echo "export PATH=\$PATH:\$XVM/xvm/$APP_NAME/default/bin"
-    export PATH=$PATH:$XVM/xvm/$APP_NAME/default/bin
+    export PATH=$PATH:$XVM/$APP_NAME/default/bin
 }
 
 function util_default_go() {
@@ -108,6 +126,5 @@ function util_default_go() {
     rm $targetPath/gopath/pkg
     ln -s $FOLDER_GOPKG $targetPath/gopath/pkg
 
-    # echo "export PATH=\$PATH:\$XVM/xvm/$APP_NAME/default/bin"
-    export PATH=$PATH:$XVM/xvm/$APP_NAME/default/bin
+    export PATH=$PATH:$XVM/$APP_NAME/default/bin
 }
