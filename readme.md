@@ -1,11 +1,13 @@
 
 
-simple simple simple 
+version manger, so easy, ^_^
 ###
+```
+clone https://github.com/izouxv/xvm.git
+```
 set .zshrc / .bashrc
 ```
 
-clone https://github.com/izouxv/xvm.git
 PATH=$PATH:[your xvm project path]
 export XVM=$[XVM folder, eg: $HOME/XVM]
 source $XVM/profile
