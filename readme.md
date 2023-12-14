@@ -39,7 +39,7 @@ install select version, you need set GITHUB_ACCESS_TOKEN
 set GITHUB_ACCESS_TOKEN install will fetch all version from github
 export GITHUB_ACCESS_TOKEN="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
-select with note
+install 
 ```
 xvm.sh flutter install 
 xvm.sh golang install 
@@ -50,6 +50,13 @@ install with version
 xvm.sh flutter install 2.5.3
 xvm.sh golang install go1.14.3
 xvm.sh node install v21.4.0
+```
+switch version 
+```
+xvm.sh flutter default 2.5.3   //switch to flutter 2.5.3
+xvm.sh golang default go1.14.3 //switch to golang 1.14.3
+xvm.sh golang default go1.21.1 //switch to golang 1.21.1
+xvm.sh node default v21.4.0    //switch to node v21.4.0
 ```
 
 
