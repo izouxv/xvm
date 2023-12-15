@@ -28,10 +28,14 @@ function refresh_path() {
     # $(ls $XVM_PATH)
     XVM_PROFILE=$XVM_PATH/profile
     # if [ -e $XVM_PROFILE]; then
-    if [ -e "$XVM_PROFILE" ]; then
-        echo "rmmmm: "$XVM_PROFILE
-        rm $XVM_PROFILE || true
-    fi
+    # if [ -e "$XVM_PROFILE" ]; then
+    #     echo "rmmmm: "$XVM_PROFILE
+    #     rm $XVM_PROFILE || true
+    # fi
+
+    cat >$XVM_PROFILE <<EOF
+EOF
+
     for i in $(ls $XVM_PATH); do
         targetProfile=$XVM_PATH/$i/profile
         if [ -e "$targetProfile" ]; then
