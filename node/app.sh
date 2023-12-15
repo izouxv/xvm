@@ -71,8 +71,10 @@ function install() {
     # https://nodejs.org/dist/v20.10.0/node-v20.10.0-linux-arm64.tar.xz
     # https://nodejs.org/dist/v20.10.0/node-v20.10.0-win-arm64.zip
     # https://nodejs.org/dist/v20.10.0/node-v20.10.0-win-arm64.zip
+    # https://nodejs.org/download/release/v14.21.3/node-v14.21.3-darwin-x64.tar.gz
 
     baseUrl="https://nodejs.org/dist"
+    baseUrl="https://nodejs.org/download/release"
 
     dirname="node-"$selectVer-$os"-"$ARCH
     case "$os" in
