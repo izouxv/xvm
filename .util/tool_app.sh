@@ -27,7 +27,11 @@ function refresh_path() {
     # ls $XVM_PATH
     # $(ls $XVM_PATH)
     XVM_PROFILE=$XVM_PATH/profile
-    rm $XVM_PROFILE | true
+    # if [ -e $XVM_PROFILE]; then
+    if [ -e "$XVM_PROFILE" ]; then
+        echo "rmmmm: "$XVM_PROFILE
+        rm $XVM_PROFILE || true
+    fi
     for i in $(ls $XVM_PATH); do
         targetProfile=$XVM_PATH/$i/profile
         if [ -e "$targetProfile" ]; then
@@ -35,7 +39,6 @@ function refresh_path() {
 source $targetProfile
 EOF
         fi
-
     done
 }
 

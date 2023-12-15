@@ -8,6 +8,9 @@ clone https://github.com/izouxv/xvm.git
 set .zshrc / .bashrc
 ```
 
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/izouxv/xvm/master/xvm_install.sh)"
+
+
 PATH=$PATH:[your xvm project path]
 export XVM=$[XVM folder, eg: $HOME/XVM]
 source $XVM/profile

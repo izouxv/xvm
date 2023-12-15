@@ -100,8 +100,8 @@ export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
 export FLUTTER_GIT_URL=\$XVM/flutter/cache/flutter.git
 export PUB_CACHE=\$XVM/flutter/flutter-pub-cache
 export FLUTTER_DIR=\$XVM/flutter/default 
-PATH=\$PATH:\$FLUTTER_DIR/bin 
-PATH=\$PATH:\$FLUTTER_DIR/bin/cache/dart-sdk/bin
+export PATH=\$PATH:\$FLUTTER_DIR/bin 
+export PATH=\$PATH:\$FLUTTER_DIR/bin/cache/dart-sdk/bin
 
 EOF
 }

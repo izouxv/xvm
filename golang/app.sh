@@ -126,7 +126,7 @@ function show_path() {
 export GO111MODULE=on
 export GOROOT=\$XVM/$APP_NAME/default
 export GOPATH=\$GOROOT/gopath
-PATH=\$PATH:\$GOPATH/bin:\$GOROOT/bin
+export PATH=\$PATH:\$GOPATH/bin:\$GOROOT/bin
 EOF
 
 }

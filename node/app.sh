@@ -144,7 +144,7 @@ function show_path() {
     # rm $FOLDER_PROFILE
     cat >$FOLDER_PROFILE <<EOF
 export NODEJS=\$XVM/$APP_NAME/default
-PATH=\$PATH:\$NODEJS/bin 
+export PATH=\$PATH:\$NODEJS/bin 
 EOF
 
 }
