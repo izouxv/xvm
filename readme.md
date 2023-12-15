@@ -2,22 +2,13 @@
 
 version manger, so easy, ^_^
 ###
-```
-clone https://github.com/izouxv/xvm.git
-```
-set .zshrc / .bashrc
-```
 
+run
+```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/izouxv/xvm/master/xvm_install.sh)"
-
-
-PATH=$PATH:[your xvm project path]
-export XVM=$[XVM folder, eg: $HOME/XVM]
-source $XVM/profile
-#set GITHUB_ACCESS_TOKEN install will fetch all version from github
-export GITHUB_ACCESS_TOKEN="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-
+input you working folder and GITHUB_ACCESS_TOKEN
 ```
+
 
 #####
  
@@ -37,11 +28,6 @@ install | uninstall | use | list | default | sync
 
 #####
 
-install select version, you need set GITHUB_ACCESS_TOKEN
-```
-set GITHUB_ACCESS_TOKEN install will fetch all version from github
-export GITHUB_ACCESS_TOKEN="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-```
 install 
 ```
 xvm.sh flutter install 
