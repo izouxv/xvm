@@ -1,11 +1,9 @@
 #!/bin/bash
 
-XVM_PATH=""
 if [ -z "$XVM" ]; then
-    echo "set XVM env, export XVM=$HOME"
+    echo "set XVM env, export XVM=$HOME/xvm"
     exit 1
 fi
-XVM_PATH=$XVM
 
 FOLDER_APP=""
 FOLDER_VERSION=""
@@ -15,32 +13,38 @@ FOLDER_PROFILE=""
 APP_NAME=""
 
 function apply_app_name() {
-    FOLDER_APP=$XVM_PATH/$APP_NAME
+    FOLDER_APP=$XVM/$APP_NAME
     FOLDER_VERSION=$FOLDER_APP/versions
     DEFAULT_LINK=$FOLDER_APP/default
     FOLDER_CACHE=$FOLDER_APP/cache
     FOLDER_PROFILE=$FOLDER_APP/profile
 }
 function refresh_path() {
-    # echo $XVM_PATH
-    # cd $XVM_PATH
-    # ls $XVM_PATH
-    # $(ls $XVM_PATH)
-    XVM_PROFILE=$XVM_PATH/profile
+    # echo $XVM
+    # cd $XVM
+    # ls $XVM
+    # $(ls $XVM)
+    XVM_PROFILE=$XVM/profile
     # if [ -e $XVM_PROFILE]; then
     # if [ -e "$XVM_PROFILE" ]; then
     #     echo "rmmmm: "$XVM_PROFILE
     #     rm $XVM_PROFILE || true
     # fi
 
+    echo "XVM_PROFILE: "$XVM_PROFILE
+
     cat >$XVM_PROFILE <<EOF
 EOF
+    echo "ls: $XVM" $(ls $XVM)
 
-    for i in $(ls $XVM_PATH); do
-        targetProfile=$XVM_PATH/$i/profile
+    for i in $(ls $XVM); do
+        targetProfile=$XVM/$i/profile
+        echo $targetProfile
+        # if [ -e "$targetProfile" ] && [ -d "$targetProfile" ]; then
         if [ -e "$targetProfile" ]; then
+            echo $targetProfile
             cat >>$XVM_PROFILE <<EOF
-source $targetProfile
+source \$XVM/$i/profile
 EOF
         fi
     done
