@@ -23,7 +23,13 @@ function install() {
 
     selectVer=$1
     os=$2
-
+    ARCH=$3
+    if [ -z "$ARCH" ]; then
+        ARCH="amd64"
+        if [ "$(arch)" = "arm64" ]; then
+            ARCH=$(arch)
+        fi
+    fi
     if [ -z "$os" ]; then
         os=$(platform)
     fi
@@ -59,10 +65,10 @@ function install() {
     echo "install ver: "$selectVer
     pkgname=""
 
-    ARCH="amd64"
-    if [ "$(arch)" = "arm64" ]; then
-        ARCH=$(arch)
-    fi
+    # ARCH="amd64"
+    # if [ "$(arch)" = "arm64" ]; then
+    #     ARCH=$(arch)
+    # fi
 
     case "$os" in
     "linux")

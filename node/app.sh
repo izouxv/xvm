@@ -23,7 +23,13 @@ function install() {
 
     selectVer=$1
     os=$2
-
+    ARCH=$3
+    if [ -z "$ARCH" ]; then
+        ARCH="x86"
+        if [ "$(arch)" = "arm64" ]; then
+            ARCH=$(arch)
+        fi
+    fi
     if [ -z "$os" ]; then
         os=$(platform)
     fi
@@ -60,11 +66,6 @@ function install() {
     echo "install ver: "$selectVer
     pkgname=""
 
-    ARCH="x64"
-    if [ "$(arch)" = "arm64" ]; then
-        ARCH=$(arch)
-    fi
-
     # https://nodejs.org/dist/v20.10.0/node-v20.10.0-darwin-x64.tar.gz
     # https://nodejs.org/dist/v20.10.0/node-v20.10.0-darwin-arm64.tar.gz
     # https://nodejs.org/dist/v20.10.0/node-v20.10.0-linux-x64.tar.xz
@@ -77,6 +78,8 @@ function install() {
     baseUrl="https://nodejs.org/download/release"
 
     dirname="node-"$selectVer-$os"-"$ARCH
+
+    echo "dirname: "$dirname
     case "$os" in
     "linux")
         pkgname="node-"$selectVer-$os"-"$ARCH".tar.xz"
@@ -164,8 +167,8 @@ main() {
     # echo $FOLDER_PROFILE
     # exit 1
 
-    # echo "Total Arguments:" $#
-    # echo "All Arguments values:" $@
+    echo "Total Arguments:" $#
+    echo "All Arguments values:" $@
     cd $PWDX
     help() {
         echo "install | uninstall | list | default "
