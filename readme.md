@@ -53,6 +53,7 @@ install with version
 xvm.sh flutter install 2.5.3
 xvm.sh golang install go1.14.3
 xvm.sh node install v21.4.0
+xvm.sh node install v14.21.3 darwin x64
 ```
 switch version 
 ```
