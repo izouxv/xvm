@@ -3,10 +3,9 @@
 version manger, so easy, ^_^
 ###
 
-run
+run, input you working folder and GITHUB_ACCESS_TOKEN
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/izouxv/xvm/master/xvm_install.sh)"
-input you working folder and GITHUB_ACCESS_TOKEN
 ```
  
 
