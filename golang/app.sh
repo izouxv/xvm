@@ -20,6 +20,7 @@ function mkdir_all() {
 # env will set GITHUB_ACCESS_TOKEN
 
 function install() {
+    # ./xvm.sh golang install go1.22.4 linux arm64
 
     selectVer=$1
     os=$2
