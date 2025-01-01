@@ -97,7 +97,9 @@ function install() {
     if [ ! -e "$tmpPath" ]; then
         # pkg_url="https://golang.org/dl/$pkgname"
         # pkg_url="https://golang.org/dl/$pkgname"
-        pkg_url="https://golang.google.cn/dl/$pkgname"
+        # pkg_url="https://golang.google.cn/dl/$pkgname"
+        pkg_url="https://go.dev/dl/$pkgname"
+
         echo "curl -L $pkg_url -o $pkgname.tmp"
         rm $tmpPath.tmp
         curl -L $pkg_url -o $tmpPath.tmp || exit 1
