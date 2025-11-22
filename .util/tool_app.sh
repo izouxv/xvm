@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -z "$XVM" ]; then
+if [ -z "$DEV" ]; then
     echo "set XVM env, export XVM=$HOME/xvm"
     exit 1
 fi
@@ -13,38 +13,38 @@ FOLDER_PROFILE=""
 APP_NAME=""
 
 function apply_app_name() {
-    FOLDER_APP=$XVM/$APP_NAME
+    FOLDER_APP=$DEV/$APP_NAME
     FOLDER_VERSION=$FOLDER_APP/versions
     DEFAULT_LINK=$FOLDER_APP/default
     FOLDER_CACHE=$FOLDER_APP/cache
     FOLDER_PROFILE=$FOLDER_APP/profile
 }
 function refresh_path() {
-    # echo $XVM
-    # cd $XVM
-    # ls $XVM
-    # $(ls $XVM)
-    XVM_PROFILE=$XVM/profile
-    # if [ -e $XVM_PROFILE]; then
-    # if [ -e "$XVM_PROFILE" ]; then
-    #     echo "rmmmm: "$XVM_PROFILE
-    #     rm $XVM_PROFILE || true
+    # echo $DEV
+    # cd $DEV
+    # ls $DEV
+    # $(ls $DEV)
+    XVM_PROFILE=$DEV/profile
+    # if [ -e $DEV_PROFILE]; then
+    # if [ -e "$DEV_PROFILE" ]; then
+    #     echo "rmmmm: "$DEV_PROFILE
+    #     rm $DEV_PROFILE || true
     # fi
 
-    echo "XVM_PROFILE: "$XVM_PROFILE
+    echo "XVM_PROFILE: "$DEV_PROFILE
 
-    cat >$XVM_PROFILE <<EOF
+    cat >$DEV_PROFILE <<EOF
 EOF
-    echo "ls: $XVM" $(ls $XVM)
+    echo "ls: $DEV" $(ls $DEV)
 
-    for i in $(ls $XVM); do
-        targetProfile=$XVM/$i/profile
+    for i in $(ls $DEV); do
+        targetProfile=$DEV/$i/profile
         echo $targetProfile
         # if [ -e "$targetProfile" ] && [ -d "$targetProfile" ]; then
         if [ -e "$targetProfile" ]; then
             echo $targetProfile
-            cat >>$XVM_PROFILE <<EOF
-source \$XVM/$i/profile
+            cat >>$DEV_PROFILE <<EOF
+source \$DEV/$i/profile
 EOF
         fi
     done
@@ -99,13 +99,11 @@ function util_default_path() {
         return
     fi
 
-    rm $DEFAULT_LINK
+    # rm $DEFAULT_LINK 
+    # ln -s $FOLDER_VERSION/$selectVer $DEFAULT_LINK
+    # echo "set default $selectVer suc"
     # echo "ln -s $FOLDER_VERSION/$selectVer $DEFAULT_LINK"
-    ln -s $FOLDER_VERSION/$selectVer $DEFAULT_LINK
-    echo "set default $selectVer suc"
-    echo "ln -s $FOLDER_VERSION/$selectVer $DEFAULT_LINK"
-
-    export PATH=$PATH:$XVM/$APP_NAME/default/bin
+    # export PATH=$PATH:$DEV/$APP_NAME/default/bin
 }
 
 function util_default_go() {
@@ -125,17 +123,16 @@ function util_default_go() {
         return
     fi
 
-    rm $DEFAULT_LINK
+    # rm $DEFAULT_LINK 
+    # ln -s $FOLDER_VERSION/$selectVer $DEFAULT_LINK
+    # echo "set default $selectVer suc"
     # echo "ln -s $FOLDER_VERSION/$selectVer $DEFAULT_LINK"
-    ln -s $FOLDER_VERSION/$selectVer $DEFAULT_LINK
-    echo "set default $selectVer suc"
-    echo "ln -s $FOLDER_VERSION/$selectVer $DEFAULT_LINK"
 
-    targetPath=$FOLDER_VERSION/$selectVer
-    FOLDER_GOPKG=$FOLDER_APP/pkg
-    echo "ln -s $FOLDER_GOPKG $targetPath/gopath/pkg"
-    rm $targetPath/gopath/pkg
-    ln -s $FOLDER_GOPKG $targetPath/gopath/pkg
+    # targetPath=$FOLDER_VERSION/$selectVer
+    # FOLDER_GOPKG=$FOLDER_APP/pkg
+    # echo "ln -s $FOLDER_GOPKG $targetPath/gopath/pkg"
+    # rm $targetPath/gopath/pkg
+    # ln -s $FOLDER_GOPKG $targetPath/gopath/pkg
 
-    export PATH=$PATH:$XVM/$APP_NAME/default/bin
+    # export PATH=$PATH:$DEV/$APP_NAME/default/bin
 }

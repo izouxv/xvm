@@ -133,7 +133,7 @@ function show_path() {
 
     cat >$FOLDER_PROFILE <<EOF
 export GO111MODULE=on
-export GOROOT=\$XVM/$APP_NAME/default
+export GOROOT=\$DEV/$APP_NAME/default
 export GOPATH=\$GOROOT/gopath
 export PATH=\$PATH:\$GOPATH/bin:\$GOROOT/bin
 EOF

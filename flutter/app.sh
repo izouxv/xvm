@@ -97,12 +97,10 @@ function show_path() {
     cat >$FOLDER_PROFILE <<EOF
 export PUB_HOSTED_URL=https://pub.flutter-io.cn
 export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
-export FLUTTER_GIT_URL=\$XVM/flutter/cache/flutter.git
-export PUB_CACHE=\$XVM/flutter/flutter-pub-cache
-export FLUTTER_DIR=\$XVM/flutter/default 
+export FLUTTER_GIT_URL=\$DEV/flutter/cache/flutter.git
+export PUB_CACHE=\$DEV/flutter/flutter-pub-cache
 export PATH=\$PATH:\$FLUTTER_DIR/bin 
 export PATH=\$PATH:\$FLUTTER_DIR/bin/cache/dart-sdk/bin
-
 EOF
 }
 

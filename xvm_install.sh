@@ -1,8 +1,8 @@
 #/bin/bash
 
-read -p "Enter a working folder(abs path, default: \$HOME/xvm): " workingfolder
+read -p "Enter a working folder(abs path, default: \$HOME/DEV): " workingfolder
 if [ -z "$workingfolder" ]; then
-    workingfolder=$HOME/xvm
+    workingfolder=$HOME/DEV
 fi
 if [ -e "$workingfolder" ]; then
     echo "folder: $workingfolder exist, please check, and try again"
@@ -20,7 +20,7 @@ echo "You github access token: $GITHUB_ACCESS_TOKEN"
 
 # ###########################################
 # function show_path() {
-#     cat >$XVM/xvm/profile <<EOF
+#     cat >$DEV/xvm/profile <<EOF
 # export GITHUB_ACCESS_TOKEN=$GITHUB_ACCESS_TOKEN
 # EOF
 # }
@@ -29,15 +29,15 @@ echo "You github access token: $GITHUB_ACCESS_TOKEN"
 #     if [ -e "$outputFile" ]; then
 #         cat >>$outputFile <<EOF
 # export XVM=$workingfolder
-# export PATH=\$PATH:\$XVM/xvm
-# source \$XVM/profile
+# export PATH=\$PATH:\$DEV/xvm
+# source \$DEV/profile
 # EOF
 #     fi
 # }
 
 # export XVM=$workingfolder
-# PATH=$PATH:$XVM/xvm
-# source $XVM/xvm/.util/tool_app.sh
+# PATH=$PATH:$DEV/xvm
+# source $DEV/xvm/.util/tool_app.sh
 # show_path
 # refresh_path
 
@@ -68,7 +68,7 @@ cd $workingfolder
 git clone https://github.com/izouxv/xvm.git
 
 function show_path() {
-    cat >$XVM/xvm/profile <<EOF
+    cat >$DEV/xvm/profile <<EOF
 export GITHUB_ACCESS_TOKEN=$GITHUB_ACCESS_TOKEN
 EOF
 }
@@ -78,15 +78,15 @@ function import_path() {
     if [ -e "$outputFile" ]; then
         cat >>$outputFile <<EOF
 export XVM=$workingfolder
-export PATH=\$PATH:\$XVM/xvm
-source \$XVM/profile
+export PATH=\$PATH:\$DEV/xvm
+source \$DEV/profile
 EOF
     fi
 }
 
 export XVM=$workingfolder
-PATH=$PATH:$XVM/xvm
-source $XVM/xvm/.util/tool_app.sh
+PATH=$PATH:$DEV/xvm
+source $DEV/xvm/.util/tool_app.sh
 
 show_path
 refresh_path
